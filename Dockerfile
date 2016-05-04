@@ -1,9 +1,8 @@
 FROM ywfwj2008/tengine:latest
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
-ENV MYSQL_CONNECTOR_PYTHON_VERSION=2.0.4
-ENV FFMPEG_VERSION=2.8.7
-ENV NODE_VERSION=6.0.0
+ENV MYSQL_CONNECTOR_PYTHON_VERSION=2.1.3
+ENV FFMPEG_VERSION=3.0.2
 
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
@@ -12,6 +11,7 @@ RUN apt-get update && apt-get upgrade -y && \
         autoconf \
         automake \
         gfortran \
+        libjpeg62-turbo-dev \
         libblas-dev \
         liblapack-dev \
         libatlas-base-dev \
@@ -35,25 +35,34 @@ RUN apt-get update && apt-get upgrade -y && \
         python-dev \
         python-pip
 
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g bower && \
+    npm install -g gulp && \
+    rm -rf /tmp/*
+
 # some python modules need libmaxminddb, install it before run 'pip install ...'
 RUN git clone --recursive https://github.com/maxmind/libmaxminddb && \
     cd libmaxminddb && \
     ./bootstrap && \
     ./configure && \
-    make && make install
+    make && make install && \
+    rm -rf /tmp/*
 
 # 安装 mysql-connector-python
 RUN wget http://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz && \
     tar -xzvf mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz && \
     cd mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION && \
-    python setup.py install
+    python setup.py install && \
+    rm -rf /tmp/*
 
 # install libfdk-aac
 RUN git clone git://github.com/mstorsjo/fdk-aac && \
     cd fdk-aac && \
     autoreconf -i && \
     ./configure && \
-    make && make install
+    make && make install && \
+    rm -rf /tmp/*
 
 # 安装 ffmpeg
 RUN wget -c http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 && \
@@ -67,18 +76,8 @@ RUN wget -c http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 && \
                 --enable-libmp3lame \
                 --enable-libopus \
                 --enable-libfdk-aac && \
-    make && make install
-
-# install nodejs
-RUN wget -c https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION.tar.gz && \
-    tar -zxvf node-v$NODE_VERSION.tar.gz && \
-    cd node-v$NODE_VERSION && \
-    ./configure && \
-    make && make install
-
-# install gulp and bower
-RUN npm install -g bower && \
-    npm install -g gulp
+    make && make install && \
+    rm -rf /tmp/*
 
 RUN pip install \
         axmlparserpy \
@@ -117,6 +116,11 @@ RUN pip install \
         scipy \
         scikit-learn \
         git+https://github.com/senko/python-video-converter.git \
-        hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
+        hg+https://dingguijin@bitbucket.org/dingguijin/apns-client && \
+        rm -rf /tmp/*
 
-RUN git clone https://github.com/PPMESSAGE/ppmessage.git /ppmessage
+RUN git clone https://github.com/PPMESSAGE/ppmessage.git /ppmessage && \
+    cd /ppmessage && \
+    ./dist.sh bower && \
+    ./dist.sh npm && \
+    ./dist.sh gulp
