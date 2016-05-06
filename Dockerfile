@@ -7,37 +7,42 @@ ENV INSTALL_DIR=/ppmessage
 
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
-        apt-file \
-        apt-utils \
-        autoconf \
-        automake \
-        gfortran \
-        libjpeg62-turbo-dev \
-        libblas-dev \
-        liblapack-dev \
-        libatlas-base-dev \
-        libffi-dev \
-        libfreetype6-dev \
-        libmagic1 \
-        libmp3lame-dev \
-        libncurses5-dev \
-        libopencore-amrwb-dev \
-        libopencore-amrnb-dev \
-        libopus-dev \
-        libpng12-dev \
-        libpcre3 \
-        libpcre3-dev \
-        libssl-dev \
-        libtool \
-        mercurial \
-        pkg-config \
-        git-core \
-        python \
-        python-dev \
-        python-pip
+    sudo \
+    apt-file \
+    apt-utils \
+    autoconf \
+    automake \
+    git-core \
+    gfortran \
+    libblas-dev \
+    liblapack-dev \
+    libatlas-base-dev \
+    libffi-dev \
+    libfreetype6-dev \
+    libmagic1 \
+    libmp3lame-dev \
+    libncurses5-dev \
+    libopencore-amrwb-dev \
+    libopencore-amrnb-dev \
+    libopus-dev \
+    libpng12-dev \
+    libpcre3 \
+    libpcre3-dev \
+    libssl-dev \
+    libtool \
+    mercurial \
+    pkg-config \
+    python \
+    python-dev \
+    python-pip
+
+# for debian
+RUN apt-get install -y libjpeg62-turbo-dev
+# for ubuntu
+RUN apt-get install -y libjpeg8-dev
 
 # install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - && \
     apt-get install -y nodejs && \
     npm install -g bower && \
     npm install -g gulp && \
@@ -121,17 +126,6 @@ RUN pip install \
         hg+https://dingguijin@bitbucket.org/dingguijin/apns-client && \
         rm -rf /tmp/*
 
-RUN git clone https://github.com/PPMESSAGE/ppmessage.git $INSTALL_DIR && \
-    cd $INSTALL_DIR && \
-    bash dist.sh dev
-
 WORKDIR $INSTALL_DIR
 
-# TODO 根据 bootstrap/config.py 创建数据库和 nginx 配置文件，生成 bootstrap/data.py
-RUN bash dist.sh bootstrap && \
-    bash dist.sh bower && \
-    bash dist.sh npm && \
-    bash dist.sh gulp && \
-    bash dist.sh start
-
-
+RUN git clone https://github.com/PPMESSAGE/ppmessage.git
