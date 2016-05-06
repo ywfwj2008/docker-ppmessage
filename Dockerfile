@@ -25,6 +25,7 @@ RUN apt-get update && apt-get upgrade -y && \
         libopencore-amrwb-dev \
         libopencore-amrnb-dev \
         libopus-dev \
+        libjpeg62-turbo-dev \
         libpng12-dev \
         libpcre3 \
         libpcre3-dev \
@@ -35,7 +36,6 @@ RUN apt-get update && apt-get upgrade -y && \
         python \
         python-dev \
         python-pip \
-        libjpeg62-turbo-dev
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - && \
