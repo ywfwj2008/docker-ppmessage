@@ -26,7 +26,6 @@ RUN apt-get update && apt-get upgrade -y && \
         libopus-dev \
         libjpeg62-turbo-dev \
         libpng12-dev \
-        libpcre3 \
         libpcre3-dev \
         libssl-dev \
         libtool \
@@ -34,7 +33,7 @@ RUN apt-get update && apt-get upgrade -y && \
         pkg-config \
         python \
         python-dev \
-        python-pip \
+        python-pip
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
