@@ -3,38 +3,37 @@ MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV MYSQL_CONNECTOR_PYTHON_VERSION=2.1.3
 ENV FFMPEG_VERSION=3.0.2
-ENV INSTALL_DIR=/ppmessage
 
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
-    sudo \
-    apt-file \
-    apt-utils \
-    autoconf \
-    automake \
-    git-core \
-    gfortran \
-    libblas-dev \
-    liblapack-dev \
-    libatlas-base-dev \
-    libffi-dev \
-    libfreetype6-dev \
-    libmagic1 \
-    libmp3lame-dev \
-    libncurses5-dev \
-    libopencore-amrwb-dev \
-    libopencore-amrnb-dev \
-    libopus-dev \
-    libpng12-dev \
-    libpcre3 \
-    libpcre3-dev \
-    libssl-dev \
-    libtool \
-    mercurial \
-    pkg-config \
-    python \
-    python-dev \
-    python-pip
+        sudo \
+        apt-file \
+        apt-utils \
+        autoconf \
+        automake \
+        git-core \
+        gfortran \
+        libblas-dev \
+        liblapack-dev \
+        libatlas-base-dev \
+        libffi-dev \
+        libfreetype6-dev \
+        libmagic1 \
+        libmp3lame-dev \
+        libncurses5-dev \
+        libopencore-amrwb-dev \
+        libopencore-amrnb-dev \
+        libopus-dev \
+        libpng12-dev \
+        libpcre3 \
+        libpcre3-dev \
+        libssl-dev \
+        libtool \
+        mercurial \
+        pkg-config \
+        python \
+        python-dev \
+        python-pip
 
 # for debian
 RUN apt-get install -y libjpeg62-turbo-dev
@@ -125,7 +124,3 @@ RUN pip install \
         git+https://github.com/senko/python-video-converter.git \
         hg+https://dingguijin@bitbucket.org/dingguijin/apns-client && \
         rm -rf /tmp/*
-
-WORKDIR $INSTALL_DIR
-
-RUN git clone https://github.com/PPMESSAGE/ppmessage.git
