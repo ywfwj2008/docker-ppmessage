@@ -7,7 +7,6 @@ ENV FFMPEG_VERSION=3.0.2
 # for debian install 'libjpeg62-turbo-dev', for ubuntu install 'libjpeg8-dev'
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
-        sudo \
         apt-file \
         apt-utils \
         autoconf \
@@ -38,7 +37,7 @@ RUN apt-get update && apt-get upgrade -y && \
         python-pip \
 
 # install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g bower && \
     npm install -g gulp && \
