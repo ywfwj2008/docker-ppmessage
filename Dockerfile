@@ -3,6 +3,7 @@ MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV MYSQL_CONNECTOR_PYTHON_VERSION=2.1.3
 ENV FFMPEG_VERSION=3.0.2
+ENV INSTALL_DIR=/ppmessage
 
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
@@ -35,7 +36,8 @@ RUN apt-get update && apt-get upgrade -y && \
         python-dev \
         python-pip
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+# install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g bower && \
     npm install -g gulp && \
@@ -49,7 +51,7 @@ RUN git clone --recursive https://github.com/maxmind/libmaxminddb && \
     make && make install && \
     rm -rf /tmp/*
 
-# 安装 mysql-connector-python
+# install mysql-connector-python
 RUN wget http://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz && \
     tar -xzvf mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz && \
     cd mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION && \
@@ -64,7 +66,7 @@ RUN git clone git://github.com/mstorsjo/fdk-aac && \
     make && make install && \
     rm -rf /tmp/*
 
-# 安装 ffmpeg
+# install ffmpeg
 RUN wget -c http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 && \
     tar -xjvf ffmpeg-$FFMPEG_VERSION.tar.bz2 && \
     cd ffmpeg-$FFMPEG_VERSION && \
@@ -119,8 +121,17 @@ RUN pip install \
         hg+https://dingguijin@bitbucket.org/dingguijin/apns-client && \
         rm -rf /tmp/*
 
-RUN git clone https://github.com/PPMESSAGE/ppmessage.git /ppmessage && \
-    cd /ppmessage && \
-    ./dist.sh bower && \
-    ./dist.sh npm && \
-    ./dist.sh gulp
+RUN git clone https://github.com/PPMESSAGE/ppmessage.git $INSTALL_DIR && \
+    cd $INSTALL_DIR && \
+    bash dist.sh dev
+
+WORKDIR $INSTALL_DIR
+
+# TODO 根据 bootstrap/config.py 创建数据库和 nginx 配置文件，生成 bootstrap/data.py
+RUN bash dist.sh bootstrap && \
+    bash dist.sh bower && \
+    bash dist.sh npm && \
+    bash dist.sh gulp && \
+    bash dist.sh start
+
+
