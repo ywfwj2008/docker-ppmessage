@@ -36,9 +36,9 @@ RUN apt-get update && apt-get upgrade -y && \
         python-pip
 
 # for debian
-RUN apt-get install -y libjpeg62-turbo-dev
+RUN apt-get install -y -q --no-install-recommends libjpeg62-turbo-dev
 # for ubuntu
-RUN apt-get install -y libjpeg8-dev
+RUN apt-get install -y -q --no-install-recommends libjpeg8-dev
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - && \
