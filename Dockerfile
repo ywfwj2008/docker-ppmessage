@@ -4,6 +4,7 @@ MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 ENV MYSQL_CONNECTOR_PYTHON_VERSION=2.1.3
 ENV FFMPEG_VERSION=3.0.2
 
+# for debian install 'libjpeg62-turbo-dev', for ubuntu install 'libjpeg8-dev'
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
         sudo \
@@ -33,12 +34,8 @@ RUN apt-get update && apt-get upgrade -y && \
         pkg-config \
         python \
         python-dev \
-        python-pip
-
-# for debian
-RUN apt-get install -y -q --no-install-recommends libjpeg62-turbo-dev
-# for ubuntu
-RUN apt-get install -y -q --no-install-recommends libjpeg8-dev
+        python-pip \
+        libjpeg62-turbo-dev
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - && \
