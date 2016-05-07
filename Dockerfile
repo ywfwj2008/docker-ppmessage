@@ -121,6 +121,8 @@ RUN wget -c http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 && \
     make && make install && \
     rm -rf /tmp/*
 
+WORKDIR /ppmessage
+
 # Other
 EXPOSE 8080 80
 
