@@ -84,13 +84,6 @@ RUN pip install \
         scikit-learn && \
         rm -rf /tmp/*
 
-# install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
-    apt-get install -y nodejs && \
-    npm install -g bower && \
-    npm install -g gulp && \
-    rm -rf /tmp/*
-
 # install mysql-connector-python
 RUN wget http://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz && \
     tar -xzvf mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz && \
