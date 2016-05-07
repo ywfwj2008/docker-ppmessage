@@ -121,6 +121,5 @@ EXPOSE 8080 80
 
 VOLUME ["/ppmessage"]
 
-COPY ["entrypoint.sh", "/entrypoint.sh"]
-
-ENTRYPOINT ["/entrypoint.sh"]
+# COPY ["entrypoint.sh", "/entrypoint.sh"]
+# ENTRYPOINT ["/entrypoint.sh"]
