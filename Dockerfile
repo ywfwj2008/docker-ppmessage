@@ -36,8 +36,7 @@ RUN apt-get update && apt-get upgrade -y && \
         python \
         python-dev \
         python-pip \
-        redis-server && \
-        && apt-get clean
+        redis-server
 
 # some python modules need libmaxminddb, install it before run 'pip install ...'
 RUN git clone --recursive https://github.com/maxmind/libmaxminddb && \
@@ -119,7 +118,7 @@ RUN wget -c http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 && \
 WORKDIR /ppmessage
 
 # If you want to intall new packages, put it here.
-RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
+RUN pip install \
         stringgenerator
 
 # others
