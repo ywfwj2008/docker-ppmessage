@@ -35,7 +35,9 @@ RUN apt-get update && apt-get upgrade -y && \
         pkg-config \
         python \
         python-dev \
-        python-pip
+        python-pip \
+        redis-server && \
+        && apt-get clean
 
 # some python modules need libmaxminddb, install it before run 'pip install ...'
 RUN git clone --recursive https://github.com/maxmind/libmaxminddb && \
@@ -45,7 +47,7 @@ RUN git clone --recursive https://github.com/maxmind/libmaxminddb && \
     make && make install && \
     rm -rf /tmp/*
 
-# install Python Package
+# pip install (pip install -i https://pypi.tuna.tsinghua.edu.cn/simple)
 RUN pip install \
         axmlparserpy \
         beautifulsoup4 \
@@ -116,10 +118,15 @@ RUN wget -c http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 && \
 
 WORKDIR /ppmessage
 
-# Other
+# If you want to intall new packages, put it here.
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
+        stringgenerator
+
+# others
 EXPOSE 8080 80
 
 VOLUME ["/ppmessage"]
 
-# COPY ["entrypoint.sh", "/entrypoint.sh"]
-# ENTRYPOINT ["/entrypoint.sh"]
+COPY ["docker-entrypoint.sh", "/.entrypoint.sh"]
+
+ENTRYPOINT ["/.entrypoint.sh"]
