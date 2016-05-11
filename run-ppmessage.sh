@@ -15,4 +15,5 @@ docker run \
        -it \
        -p 8080:8080 \
        -v ~/Documents/ppmessage:/ppmessage \
+       --link mysql
        ywfwj2008/ppmessage

@@ -1,13 +1,13 @@
 # Dockerfile
 
-This directory cantains resources for building PPMesage-Docker image (ppmessage/ppmessage).
+This directory cantains resources for building PPMesage-Docker image (ywfwj2008/ppmessage).
 
 ---
 
 ### Before Proceeding
 If you just want to set up development environment, you should use the pre-built image.
 
-    docker pull ppmessage/ppmessage
+    docker pull ywfwj2008/ppmessage
 
 For more details to set up development environment, check [ppbook](https://ppmessage.gitbooks.io/ppbook/content/part3/ppmessage/set-up/index.html)
 
